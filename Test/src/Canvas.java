@@ -15,6 +15,14 @@ public class Canvas extends JPanel {
 		shapes = new ArrayList<Shape>();
 	}
 	
+	public void save() {
+		// TODO
+	}
+	
+	public void load() {
+		// TODO
+	}
+	
 	public void addShape(Shape shape) {
 		shapes.add(shape);
 	}
