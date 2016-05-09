@@ -12,9 +12,11 @@ import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 
 public class Panel extends JFrame implements ChangeListener{
 	JLabel banner;
@@ -26,7 +28,10 @@ public class Panel extends JFrame implements ChangeListener{
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		JPanel buttonPanel = new JPanel();
+		JPanel coordinatePanel = new JPanel();
 		JPanel drawPanel = new JPanel(); // new Canvas()
+		JLabel coordinateLabel = new JLabel("Coordinate Input");
+		JTextField coord1 = new JTextField();
 		
         banner = new JLabel("Welcome to the Color Zone!", JLabel.CENTER);
         banner.setForeground(Color.yellow);
@@ -39,7 +44,6 @@ public class Panel extends JFrame implements ChangeListener{
         tcc.getSelectionModel().addChangeListener(this);
         tcc.setBorder(BorderFactory.createTitledBorder("Choose Text Color"));
 
-		
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(new EtchedBorder());
 		panel.add(banner, BorderLayout.NORTH);
@@ -50,6 +54,10 @@ public class Panel extends JFrame implements ChangeListener{
 		drawPanel.setBorder(new EtchedBorder());
 		buttonPanel.setBorder(new EtchedBorder());
 		buttonPanel.setLayout(new GridLayout(10, 1));
+
+		coordinatePanel.setLayout(new GridLayout(2, 5));
+		coordinatePanel.add(coordinateLabel);
+		coordinatePanel.add(coord1);
 		
 		JButton ellipseButton = new JButton("Ellipses");
 		JButton rectangleButton = new JButton("Rectangle");
@@ -66,7 +74,7 @@ public class Panel extends JFrame implements ChangeListener{
 		buttonPanel.add(ellipseButton);
 		buttonPanel.add(rectangleButton);
 		buttonPanel.add(lineButton);
-		
+		buttonPanel.add(coordinatePanel);
 		
 		frame.add(panel);
 		frame.setSize(1000, 800);
