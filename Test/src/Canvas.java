@@ -23,7 +23,7 @@ public class Canvas extends JPanel {
 		shapes.remove(shapes.size() - 1);
 	}
 	
-	public void clear() {
+	public void clearShapes() {
 		shapes = new ArrayList<Shape>();
 	}
 	

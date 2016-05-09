@@ -29,7 +29,7 @@ public class Panel extends JFrame implements ChangeListener{
 		JPanel panel = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		JPanel coordinatePanel = new JPanel();
-		JPanel drawPanel = new JPanel(); // new Canvas()
+		Canvas drawPanel = new Canvas();
 		JLabel coordinateLabel = new JLabel("Coordinate Input");
 		JTextField coord1 = new JTextField();
 		
