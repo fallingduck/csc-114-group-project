@@ -25,7 +25,7 @@ public class Panel extends JFrame implements ChangeListener{
 	JColorChooser tcc;
 	
 	public Panel() {
-
+//UI Update
 		// TODO Auto-generated method stub
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
