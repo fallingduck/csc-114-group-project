@@ -24,6 +24,17 @@ public class Panel extends JFrame implements ChangeListener{
 	JLabel banner;
 	JColorChooser tcc;
 	
+	Canvas drawPanel;
+	
+	JRadioButton ellipseButton;
+	JRadioButton rectangleButton;
+	JRadioButton lineButton;
+	
+	JTextField topLeftX;
+	JTextField topLeftY;
+	JTextField bottomRightX;
+	JTextField bottomRightY;
+	
 	public Panel() {
 //UI Update
 		// TODO Auto-generated method stub
@@ -31,17 +42,17 @@ public class Panel extends JFrame implements ChangeListener{
 		JPanel panel = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		JPanel coordinatePanel = new JPanel();
-		Canvas drawPanel = new Canvas();
+		drawPanel = new Canvas();
 		
 		//JLabel coordinateLabel = new JLabel("Coordinate Input");
 		JLabel TXLabel = new JLabel("Top Left X");
 		JLabel TYLabel = new JLabel("Top Left Y");
 		JLabel BXLabel = new JLabel("Bottom Right X");
 		JLabel BYLabel = new JLabel("Bottom Right Y");
-		JTextField topLeftX = new JTextField();
-		JTextField topLeftY = new JTextField();
-		JTextField bottomRightX = new JTextField();
-		JTextField bottomRightY = new JTextField();
+		topLeftX = new JTextField();
+		topLeftY = new JTextField();
+		bottomRightX = new JTextField();
+		bottomRightY = new JTextField();
 		
         banner = new JLabel("Welcome to the Color Zone!", JLabel.CENTER);
         banner.setForeground(Color.yellow);
@@ -76,9 +87,9 @@ public class Panel extends JFrame implements ChangeListener{
 		coordinatePanel.add(BYLabel);
 		coordinatePanel.add(bottomRightY);
 		
-		JRadioButton ellipseButton = new JRadioButton("Ellipses");
-		JRadioButton rectangleButton = new JRadioButton("Rectangle");
-		JRadioButton lineButton = new JRadioButton("Line");
+		ellipseButton = new JRadioButton("Ellipses");
+		rectangleButton = new JRadioButton("Rectangle");
+		lineButton = new JRadioButton("Line");
 		ButtonGroup radioGroup = new ButtonGroup();
 		JButton addShape = new JButton("Add Shape");
 		JButton undoShape = new JButton("Undo");
@@ -86,18 +97,12 @@ public class Panel extends JFrame implements ChangeListener{
 		JButton save = new JButton("Save");
 		JButton load = new JButton("Load");
 		
-		ActionListener ellipseListener = new AddEllipseListener();
-		ActionListener rectangleListener = new AddRectangleListener();
-		ActionListener lineListener = new AddLineListener();
 		ActionListener addShapeListener = new AddShapeListener();
 		ActionListener undoShapeListener = new UndoShapeListener();
 		ActionListener clearShapeListener = new ClearShapeListener();
 		ActionListener saveListener = new SaveListener();
 		ActionListener loadListener = new LoadListener();
 		
-		ellipseButton.addActionListener(ellipseListener);
-		rectangleButton.addActionListener(rectangleListener);
-		lineButton.addActionListener(lineListener);
 		addShape.addActionListener(addShapeListener);
 		undoShape.addActionListener(undoShapeListener);
 		clearShape.addActionListener(clearShapeListener);
@@ -124,47 +129,43 @@ public class Panel extends JFrame implements ChangeListener{
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	}
-	
 
-	
-
-	class AddEllipseListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			//Select Shape
-			//Activate mouse coordinate
-		}
-	}
-	
-	class AddRectangleListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			//Select Shape
-			//Activate mouse coordinate
-		}
-	}
-	
-	class AddLineListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			//Select Shape
-			//Activate mouse coordinate
-		}
-	}
 	
 	class AddShapeListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			//Select Shape
-			//Activate mouse coordinate
+			if (ellipseButton.isSelected()) {
+				System.out.println("Button clicked");
+				drawPanel.addShape(new Ellipse(
+						Integer.parseInt(topLeftX.getText()),
+						Integer.parseInt(topLeftY.getText()),
+						Integer.parseInt(bottomRightX.getText()),
+						Integer.parseInt(bottomRightY.getText()),
+						tcc.getColor()
+				));
+				drawPanel.repaint();
+			} else if (rectangleButton.isSelected()) {
+				System.out.println("Button clicked");
+				drawPanel.addShape(new Rectangle(
+						Integer.parseInt(topLeftX.getText()),
+						Integer.parseInt(topLeftY.getText()),
+						Integer.parseInt(bottomRightX.getText()),
+						Integer.parseInt(bottomRightY.getText()),
+						tcc.getColor()
+				));
+				drawPanel.repaint();
+			} else if (lineButton.isSelected()) {
+				System.out.println("Button clicked");
+				drawPanel.addShape(new Line(
+						Integer.parseInt(topLeftX.getText()),
+						Integer.parseInt(topLeftY.getText()),
+						Integer.parseInt(bottomRightX.getText()),
+						Integer.parseInt(bottomRightY.getText()),
+						tcc.getColor()
+				));
+				drawPanel.repaint();
+			}
 		}
 	}
 	
@@ -172,9 +173,8 @@ public class Panel extends JFrame implements ChangeListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			//Select Shape
-			//Activate mouse coordinate
+			drawPanel.removeLastShape();
+			drawPanel.repaint();
 		}
 	}
 	
@@ -182,9 +182,8 @@ public class Panel extends JFrame implements ChangeListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			//Select Shape
-			//Activate mouse coordinate
+			drawPanel.clearShapes();
+			drawPanel.repaint();
 		}
 	}
 	
@@ -192,9 +191,7 @@ public class Panel extends JFrame implements ChangeListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			//Select Shape
-			//Activate mouse coordinate
+			drawPanel.save("test.dat");
 		}
 	}
 	
@@ -202,9 +199,8 @@ public class Panel extends JFrame implements ChangeListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			//Select Shape
-			//Activate mouse coordinate
+			drawPanel.load("test.dat");
+			drawPanel.repaint();
 		}
 	}
 

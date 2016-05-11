@@ -37,10 +37,11 @@ public class Canvas extends JPanel {
 		try {
 			FileInputStream fileIn = new FileInputStream(fileName);
 			ObjectInputStream objIn = new ObjectInputStream(fileIn);
-			shapes = (ArrayList<Shape>) objIn.readObject();
+			shapes = (ArrayList<Shape>) (objIn.readObject());
 			objIn.close();
 			return true;
 		} catch (IOException | ClassNotFoundException | ClassCastException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
