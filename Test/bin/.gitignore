@@ -9,3 +9,8 @@
 /Rectangle.class
 /Shape.class
 /stst.class
+/Panel$AddShapeListener.class
+/Panel$ClearShapeListener.class
+/Panel$LoadListener.class
+/Panel$SaveListener.class
+/Panel$UndoShapeListener.class
