@@ -35,6 +35,10 @@ public class Panel extends JFrame implements ChangeListener{
 	JTextField bottomRightX;
 	JTextField bottomRightY;
 	
+	public static void main(String[] args) {
+		Panel drawUI = new Panel();
+	}
+	
 	public Panel() {
 //UI Update
 		// TODO Auto-generated method stub
