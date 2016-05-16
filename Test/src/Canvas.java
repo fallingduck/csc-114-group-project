@@ -15,9 +15,11 @@ public class Canvas extends JPanel {
 	private static final long serialVersionUID = -3828341052392942903L;
 	
 	ArrayList<Shape> shapes;
+	ArrayList<Shape> deletedShapes;
 	
 	public Canvas() {
 		shapes = new ArrayList<Shape>();
+		deletedShapes = new ArrayList<Shape>();
 	}
 	
 	public boolean save(String fileName) {
@@ -51,7 +53,13 @@ public class Canvas extends JPanel {
 	}
 	
 	public void removeLastShape() {
-		shapes.remove(shapes.size() - 1);
+		if (shapes.size() == 0) return;
+		deletedShapes.add(shapes.remove(shapes.size() - 1));
+	}
+	
+	public void redoLastShape() {
+		if (deletedShapes.size() == 0) return;
+		shapes.add(deletedShapes.remove(deletedShapes.size() - 1));
 	}
 	
 	public void clearShapes() {

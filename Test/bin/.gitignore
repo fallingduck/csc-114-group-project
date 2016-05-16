@@ -4,13 +4,11 @@
 /Panel$AddShapeListener.class
 /Panel$ClearShapeListener.class
 /Panel$LoadListener.class
+/Panel$MouseClickListener.class
+/Panel$MouseDragListener.class
+/Panel$RedoShapeListener.class
 /Panel$SaveListener.class
 /Panel$UndoShapeListener.class
 /Panel.class
 /Rectangle.class
 /Shape.class
-/Panel$MouseClickListener.class
-/Panel$1AddShapeListener.class
-/Panel$mouseMoveListener.class
-/Panel$MouseDragListener.class
-/Panel$RedoShapeListener.class

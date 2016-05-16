@@ -39,6 +39,7 @@ public class Panel extends JFrame implements ChangeListener{
 	JTextField topLeftY;
 	JTextField bottomRightX;
 	JTextField bottomRightY;
+	JTextField saveField;
 	
 	public static void main(String[] args) {
 		Panel drawUI = new Panel();
@@ -107,13 +108,15 @@ public class Panel extends JFrame implements ChangeListener{
 		ellipseButton = new JRadioButton("Ellipses");
 		rectangleButton = new JRadioButton("Rectangle");
 		lineButton = new JRadioButton("Line");
+		lineButton.setSelected(true);
 		ButtonGroup radioGroup = new ButtonGroup();
 		JButton addShape = new JButton("Add Shape");
 		JButton undoShape = new JButton("Undo");
 		JButton redoShape = new JButton("Redo");
 		JButton clearShape = new JButton("Clear All");
 		JButton save = new JButton("Save");
-		JTextField saveField = new JTextField();
+		saveField = new JTextField();
+		saveField.setText("untitled.dat");
 		JButton load = new JButton("Load");
 		
 		ActionListener addShapeListener = new AddShapeListener();
@@ -209,7 +212,7 @@ public class Panel extends JFrame implements ChangeListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			drawPanel.removeLastShape();
+			drawPanel.redoLastShape();
 			drawPanel.repaint();
 		}
 	}
@@ -227,7 +230,7 @@ public class Panel extends JFrame implements ChangeListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			drawPanel.save("test.dat");
+			drawPanel.save(saveField.getText());
 		}
 	}
 	
@@ -235,7 +238,7 @@ public class Panel extends JFrame implements ChangeListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			drawPanel.load("test.dat");
+			drawPanel.load(saveField.getText());
 			drawPanel.repaint();
 		}
 	} 
@@ -253,30 +256,14 @@ public class Panel extends JFrame implements ChangeListener{
 			// TODO Auto-generated method stub
 			topLeftX.setText(Integer.toString(e.getPoint().x));
 			topLeftY.setText(Integer.toString(e.getPoint().y));
-			
+			bottomRightX.setText(Integer.toString(e.getPoint().x));
+			bottomRightY.setText(Integer.toString(e.getPoint().y));
+			addShape();
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			int topX = Integer.parseInt(topLeftX.getText());
-			int topY = Integer.parseInt(topLeftY.getText());
-			int bottomX = e.getPoint().x;
-			int bottomY = e.getPoint().y;
-			if (lineButton.isSelected()) {
-				bottomRightX.setText(Integer.toString(bottomX));
-				bottomRightY.setText(Integer.toString(bottomY));
-				addShape();
-				return;
-			}
-			
-			java.awt.Rectangle r = new java.awt.Rectangle();
-			r.setFrameFromDiagonal(new Point(topX, topY), new Point(bottomX, bottomY));
-			topLeftX.setText(Integer.toString((int) r.getX()));
-			topLeftY.setText(Integer.toString((int) r.getY()));
-			bottomRightX.setText(Integer.toString((int) (r.getX() + r.getWidth())));
-			bottomRightY.setText(Integer.toString((int) (r.getY() + r.getHeight())));
-			addShape();
 		}
 
 		@Override
@@ -298,9 +285,27 @@ public class Panel extends JFrame implements ChangeListener{
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			// TODO Auto-generated method stub
-			//System.out.println(e.getLocationOnScreen());
-			System.out.println(e.getPoint());
-			
+			drawPanel.removeLastShape();
+			int topX = Integer.parseInt(topLeftX.getText());
+			int topY = Integer.parseInt(topLeftY.getText());
+			int bottomX = e.getPoint().x;
+			int bottomY = e.getPoint().y;
+			if (lineButton.isSelected()) {
+				bottomRightX.setText(Integer.toString(bottomX));
+				bottomRightY.setText(Integer.toString(bottomY));
+				addShape();
+				return;
+			}
+
+			java.awt.Rectangle r = new java.awt.Rectangle();
+			r.setFrameFromDiagonal(new Point(topX, topY), new Point(bottomX, bottomY));
+			topLeftX.setText(Integer.toString((int) r.getX()));
+			topLeftY.setText(Integer.toString((int) r.getY()));
+			bottomRightX.setText(Integer.toString((int) (r.getX() + r.getWidth())));
+			bottomRightY.setText(Integer.toString((int) (r.getY() + r.getHeight())));
+			addShape();
+			topLeftX.setText(Integer.toString(topX));
+			topLeftY.setText(Integer.toString(topY));
 		}
 
 		@Override
