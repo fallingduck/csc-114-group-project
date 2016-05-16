@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -50,6 +51,7 @@ public class Panel extends JFrame implements ChangeListener{
 		JPanel panel = new JPanel();
 		JPanel buttonPanel = new JPanel();
 		JPanel coordinatePanel = new JPanel();
+		JPanel tccPanel = new JPanel();
 		drawPanel = new Canvas();
 		
 		//JLabel coordinateLabel = new JLabel("Coordinate Input");
@@ -67,18 +69,21 @@ public class Panel extends JFrame implements ChangeListener{
         banner.setBackground(Color.blue);
         banner.setOpaque(true);
         banner.setFont(new Font("SansSerif", Font.BOLD, 24));
-        banner.setPreferredSize(new Dimension(100, 65));
+        banner.setPreferredSize(new Dimension(100, 40));
         
         tcc = new JColorChooser(banner.getForeground());
         tcc.getSelectionModel().addChangeListener(this);
         tcc.setBorder(BorderFactory.createTitledBorder("Choose Text Color"));
+        tccPanel.add(tcc);
+        tccPanel.setSize(200, 100);
+
 
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(new EtchedBorder());
 		panel.add(banner, BorderLayout.NORTH);
 		panel.add(buttonPanel, BorderLayout.WEST);
 		panel.add(drawPanel, BorderLayout.CENTER);
-		panel.add(tcc, BorderLayout.PAGE_END);
+		panel.add(tccPanel, BorderLayout.PAGE_END);
 		 
 		drawPanel.setBorder(new EtchedBorder());
 		MouseListener mouseListener = new MouseClickListener();
@@ -86,7 +91,7 @@ public class Panel extends JFrame implements ChangeListener{
 		drawPanel.addMouseListener(mouseListener);
 		drawPanel.addMouseMotionListener(mouseMotionListener);
 		buttonPanel.setBorder(new EtchedBorder());
-		buttonPanel.setLayout(new GridLayout(10, 1));
+		buttonPanel.setLayout(new GridLayout(14, 1));
 
 		coordinatePanel.setLayout(new GridLayout(2, 4));
 		//coordinatePanel.add(coordinateLabel);
@@ -105,18 +110,22 @@ public class Panel extends JFrame implements ChangeListener{
 		ButtonGroup radioGroup = new ButtonGroup();
 		JButton addShape = new JButton("Add Shape");
 		JButton undoShape = new JButton("Undo");
+		JButton redoShape = new JButton("Redo");
 		JButton clearShape = new JButton("Clear All");
 		JButton save = new JButton("Save");
+		JTextField saveField = new JTextField();
 		JButton load = new JButton("Load");
 		
 		ActionListener addShapeListener = new AddShapeListener();
 		ActionListener undoShapeListener = new UndoShapeListener();
+		ActionListener redoShapeListener = new RedoShapeListener();
 		ActionListener clearShapeListener = new ClearShapeListener();
 		ActionListener saveListener = new SaveListener();
 		ActionListener loadListener = new LoadListener();
 		
 		addShape.addActionListener(addShapeListener);
 		undoShape.addActionListener(undoShapeListener);
+		redoShape.addActionListener(redoShapeListener);
 		clearShape.addActionListener(clearShapeListener);
 		save.addActionListener(saveListener);
 		load.addActionListener(loadListener);
@@ -131,12 +140,14 @@ public class Panel extends JFrame implements ChangeListener{
 		buttonPanel.add(coordinatePanel);
 		buttonPanel.add(addShape);
 		buttonPanel.add(undoShape);
+		buttonPanel.add(redoShape);
 		buttonPanel.add(clearShape);
 		buttonPanel.add(save);
+		buttonPanel.add(saveField);
 		buttonPanel.add(load);
-		
+			
 		frame.add(panel);
-		frame.setSize(1000, 800);
+		frame.setSize(1000, 1000);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -186,6 +197,15 @@ public class Panel extends JFrame implements ChangeListener{
 	}
 	
 	class UndoShapeListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			drawPanel.removeLastShape();
+			drawPanel.repaint();
+		}
+	}
+	
+	class RedoShapeListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
