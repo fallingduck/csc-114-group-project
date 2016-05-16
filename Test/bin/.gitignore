@@ -11,3 +11,5 @@
 /Shape.class
 /Panel$MouseClickListener.class
 /Panel$1AddShapeListener.class
+/Panel$mouseMoveListener.class
+/Panel$MouseDragListener.class

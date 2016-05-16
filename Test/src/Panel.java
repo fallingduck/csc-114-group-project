@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -81,7 +82,9 @@ public class Panel extends JFrame implements ChangeListener{
 		 
 		drawPanel.setBorder(new EtchedBorder());
 		MouseListener mouseListener = new MouseClickListener();
+		MouseMotionListener mouseMotionListener = new MouseDragListener();
 		drawPanel.addMouseListener(mouseListener);
+		drawPanel.addMouseMotionListener(mouseMotionListener);
 		buttonPanel.setBorder(new EtchedBorder());
 		buttonPanel.setLayout(new GridLayout(10, 1));
 
@@ -257,6 +260,24 @@ public class Panel extends JFrame implements ChangeListener{
 
 		@Override
 		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	class MouseDragListener implements MouseMotionListener{
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			// TODO Auto-generated method stub
+			//System.out.println(e.getLocationOnScreen());
+			System.out.println(e.getPoint());
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
 			// TODO Auto-generated method stub
 			
 		}
