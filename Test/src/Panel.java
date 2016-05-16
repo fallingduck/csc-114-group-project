@@ -75,6 +75,7 @@ public class Panel extends JFrame implements ChangeListener{
         tcc = new JColorChooser(banner.getForeground());
         tcc.getSelectionModel().addChangeListener(this);
         tcc.setBorder(BorderFactory.createTitledBorder("Choose Text Color"));
+        tcc.setColor(Color.BLACK);
         tccPanel.add(tcc);
         tccPanel.setSize(200, 100);
 
