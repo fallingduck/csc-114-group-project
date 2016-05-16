@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -77,6 +79,8 @@ public class Panel extends JFrame implements ChangeListener{
 		panel.add(tcc, BorderLayout.PAGE_END);
 		 
 		drawPanel.setBorder(new EtchedBorder());
+		MouseListener mouseListener = new MouseClickListener();
+		drawPanel.addMouseListener(mouseListener);
 		buttonPanel.setBorder(new EtchedBorder());
 		buttonPanel.setLayout(new GridLayout(10, 1));
 
@@ -206,6 +210,44 @@ public class Panel extends JFrame implements ChangeListener{
 			drawPanel.load("test.dat");
 			drawPanel.repaint();
 		}
+	} 
+	
+	class MouseClickListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			topLeftX.setText(Integer.toString(e.getPoint().x));
+			topLeftY.setText(Integer.toString(e.getPoint().y));
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			bottomRightX.setText(Integer.toString(e.getPoint().x));
+			bottomRightY.setText(Integer.toString(e.getPoint().y));
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 	@Override
