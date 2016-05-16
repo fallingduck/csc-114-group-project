@@ -172,6 +172,7 @@ public class Panel extends JFrame implements ChangeListener{
 					Integer.parseInt(bottomRightY.getText()),
 					tcc.getColor()
 			));
+			drawPanel.repaint();
 		}
 	}
 
@@ -242,6 +243,12 @@ public class Panel extends JFrame implements ChangeListener{
 			int topY = Integer.parseInt(topLeftY.getText());
 			int bottomX = e.getPoint().x;
 			int bottomY = e.getPoint().y;
+			if (lineButton.isSelected()) {
+				bottomRightX.setText(Integer.toString(bottomX));
+				bottomRightY.setText(Integer.toString(bottomY));
+				addShape();
+				return;
+			}
 			
 			java.awt.Rectangle r = new java.awt.Rectangle();
 			r.setFrameFromDiagonal(new Point(topX, topY), new Point(bottomX, bottomY));
