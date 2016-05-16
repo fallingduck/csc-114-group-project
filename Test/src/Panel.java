@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -137,43 +138,46 @@ public class Panel extends JFrame implements ChangeListener{
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 	}
+	
+	public void addShape() {
+		if (ellipseButton.isSelected()) {
+			System.out.println("Button clicked");
+			drawPanel.addShape(new Ellipse(
+					Integer.parseInt(topLeftX.getText()),
+					Integer.parseInt(topLeftY.getText()),
+					Integer.parseInt(bottomRightX.getText()),
+					Integer.parseInt(bottomRightY.getText()),
+					tcc.getColor()
+			));
+			drawPanel.repaint();
+		} else if (rectangleButton.isSelected()) {
+			System.out.println("Button clicked");
+			drawPanel.addShape(new Rectangle(
+					Integer.parseInt(topLeftX.getText()),
+					Integer.parseInt(topLeftY.getText()),
+					Integer.parseInt(bottomRightX.getText()),
+					Integer.parseInt(bottomRightY.getText()),
+					tcc.getColor()
+			));
+			drawPanel.repaint();
+		} else if (lineButton.isSelected()) {
+			System.out.println("Button clicked");
+			drawPanel.addShape(new Line(
+					Integer.parseInt(topLeftX.getText()),
+					Integer.parseInt(topLeftY.getText()),
+					Integer.parseInt(bottomRightX.getText()),
+					Integer.parseInt(bottomRightY.getText()),
+					tcc.getColor()
+			));
+		}
+	}
 
 	
 	class AddShapeListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (ellipseButton.isSelected()) {
-				System.out.println("Button clicked");
-				drawPanel.addShape(new Ellipse(
-						Integer.parseInt(topLeftX.getText()),
-						Integer.parseInt(topLeftY.getText()),
-						Integer.parseInt(bottomRightX.getText()),
-						Integer.parseInt(bottomRightY.getText()),
-						tcc.getColor()
-				));
-				drawPanel.repaint();
-			} else if (rectangleButton.isSelected()) {
-				System.out.println("Button clicked");
-				drawPanel.addShape(new Rectangle(
-						Integer.parseInt(topLeftX.getText()),
-						Integer.parseInt(topLeftY.getText()),
-						Integer.parseInt(bottomRightX.getText()),
-						Integer.parseInt(bottomRightY.getText()),
-						tcc.getColor()
-				));
-				drawPanel.repaint();
-			} else if (lineButton.isSelected()) {
-				System.out.println("Button clicked");
-				drawPanel.addShape(new Line(
-						Integer.parseInt(topLeftX.getText()),
-						Integer.parseInt(topLeftY.getText()),
-						Integer.parseInt(bottomRightX.getText()),
-						Integer.parseInt(bottomRightY.getText()),
-						tcc.getColor()
-				));
-				drawPanel.repaint();
-			}
+			addShape();
 		}
 	}
 	
@@ -231,9 +235,17 @@ public class Panel extends JFrame implements ChangeListener{
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			bottomRightX.setText(Integer.toString(e.getPoint().x));
-			bottomRightY.setText(Integer.toString(e.getPoint().y));
-			
+			java.awt.Rectangle r = new java.awt.Rectangle();
+			int topX = Integer.parseInt(topLeftX.getText());
+			int topY = Integer.parseInt(topLeftY.getText());
+			int bottomX = e.getPoint().x;
+			int bottomY = e.getPoint().y;
+			r.setFrameFromDiagonal(new Point(Math.min(topX, bottomX), Math.min(topY, bottomY)), new Point(Math.max(topX, bottomX), Math.max(topY, bottomY)));
+			topLeftX.setText(Integer.toString((int) r.getX()));
+			topLeftY.setText(Integer.toString((int) r.getY()));
+			bottomRightX.setText(Integer.toString((int) (r.getX() + r.getWidth())));
+			bottomRightY.setText(Integer.toString((int) (r.getY() + r.getHeight())));
+			addShape();
 		}
 
 		@Override
