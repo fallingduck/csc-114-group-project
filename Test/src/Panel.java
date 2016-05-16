@@ -235,12 +235,13 @@ public class Panel extends JFrame implements ChangeListener{
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			java.awt.Rectangle r = new java.awt.Rectangle();
 			int topX = Integer.parseInt(topLeftX.getText());
 			int topY = Integer.parseInt(topLeftY.getText());
 			int bottomX = e.getPoint().x;
 			int bottomY = e.getPoint().y;
-			r.setFrameFromDiagonal(new Point(Math.min(topX, bottomX), Math.min(topY, bottomY)), new Point(Math.max(topX, bottomX), Math.max(topY, bottomY)));
+			
+			java.awt.Rectangle r = new java.awt.Rectangle();
+			r.setFrameFromDiagonal(new Point(topX, topY), new Point(bottomX, bottomY));
 			topLeftX.setText(Integer.toString((int) r.getX()));
 			topLeftY.setText(Integer.toString((int) r.getY()));
 			bottomRightX.setText(Integer.toString((int) (r.getX() + r.getWidth())));
